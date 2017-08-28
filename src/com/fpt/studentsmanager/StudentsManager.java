@@ -18,12 +18,6 @@ public class StudentsManager {
      */
     public static void main(String[] args) {
         ArrayList<Students> student = new ArrayList<Students>();
-        Students student01 = new Students("Nguyễn Văn A", "11/11/1111", "nva@fpt.vn");
-        Students student02 = new Students("Tạ Văn B", "22/12/1222", "tvb@fpt.vn");
-        Students student03 = new Students("Trần Văn C", "01/01/1900", "tvc@2gmail.com");
-        student.add(student01);
-        student.add(student02);
-        student.add(student03);
 
         Scanner scan = new Scanner(System.in);
         String choice;
@@ -48,7 +42,6 @@ public class StudentsManager {
                     }
                     System.out.println("\nPress Enter to back the Menu");
                     scan.nextLine();
-
                     break;
                 // add stuudent
                 case "2":
@@ -72,6 +65,7 @@ public class StudentsManager {
                     break;
                 // edit student info
                 case "3":
+                    int editFlag = 0;
                     System.out.println("Find student by info (name, email) :");
                     String mod = scan.nextLine();
                     for (Students s : student) {
@@ -88,27 +82,47 @@ public class StudentsManager {
                             student.get(index).setName(name);
                             student.get(index).setEmail(email);
                             student.get(index).setBirthday(birthday);
-                        }
+                            editFlag++;
+                            System.out.println("Success !!!");
+                            System.out.println("\nPress Enter to back the Menu");
+                            scan.nextLine();
+                        } 
                     }
+                       if(editFlag == 0) {
+                            System.out.println("Student not found !!!");
+                            System.out.println("\nPress Enter to back the Menu");
+                            scan.nextLine();
+                        }
                     break;
                 // delete student by name or email
                 case "4":
                     System.out.println("Find student by info (name, email) :");
                     String del = scan.nextLine();
+                    int flag = 0;
                     for (Students s : student) {
                         int index = student.indexOf(s);
                         if (del.equalsIgnoreCase(s.getName()) || del.equalsIgnoreCase(s.getEmail())) {
+                            flag++;
                             System.out.println("Student found : " + s.getName() + "   " + s.getEmail() + "    " + s.getBirthday());
                             System.out.print("Press Y to DELETE , N to back the Menu : ");
                             String delChoice = scan.nextLine();
                             if (delChoice.equalsIgnoreCase("y")) {
                                 student.remove(index);
                                 System.out.println("Success !!! \n");
+                                System.out.println("\nPress Enter to back the Menu");
+                                scan.nextLine();
 
                             } else if (del.equalsIgnoreCase("n")) {
                                 break;
+                            } else {
+                                System.out.println("Wrong choice !!! Please try again ");
                             }
                         }
+                    }
+                    if (flag == 0) {
+                        System.out.println("Student not found !!!");
+                        System.out.println("\nPress Enter to back the Menu");
+                        scan.nextLine();
                     }
                     break;
                 // exit program
